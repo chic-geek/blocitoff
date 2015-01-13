@@ -15,14 +15,11 @@ feature "User Registration", :type => :feature do
     expect(current_path).to eq(new_user_registration_path)
 
     # Fill out the sign up form with the appropriate details
-    # and click the sign up button
-    fill_in "Email", with: "tester@example.tld"
-    fill_in "Password", with: "test-password"
-    fill_in "Password confirmation", with: "test-password"
-    click_button "Sign up"
+    # and click the sign up button (See private method below)
+    fill_out_form("tester@example.tld", "test-password", "test-password")
 
     # Expect the path to be back at the app root with a confimation :notice
-    expect(current_path).to eq "/"
+    expect(current_path).to eq("/")
     expect(page).to have_content(
       "A message with a confirmation link has been sent to your email address.
       Please follow the link to activate your account."
@@ -35,16 +32,16 @@ feature "User Registration", :type => :feature do
 
     # Back out of the email and at the new_user_session_path
     # Expect the page to have the below content
-    expect(current_path).to eq new_user_session_path
+    expect(current_path).to eq(new_user_session_path)
     expect(page).to have_content "Your email address has been successfully confirmed."
 
     # Fill out the sign in form with below details and click the button with 'Log in' text
     fill_in "Email", with: "tester@example.tld"
     fill_in "Password", with: "test-password"
-    click_button "Log in"
+    click_button "Sign in"
 
     # Jump back to app root and expect the page to have the below content
-    expect(current_path).to eq "/"
+    expect(current_path).to eq("/")
     expect(page).to have_content "Signed in successfully."
     expect(page).to have_content "Hello, tester@example.tld"
   end
@@ -66,10 +63,7 @@ feature "User Registration", :type => :feature do
     end
 
     scenario "email address is invalid" do
-      fill_in "Email", with: 'invalid-email'
-      fill_in "Password", with: 'test-password'
-      fill_in "Password confirmation", with: 'test-password'
-      click_button "Sign up"
+      fill_out_form("invalid-email", "test-password", "test-password")
       expect_error_msgs "Email is invalid"
     end
 
@@ -77,18 +71,12 @@ feature "User Registration", :type => :feature do
     # For a little more on factory_girl check out: http://www.rubydoc.info/gems/factory_girl/file/GETTING_STARTED.md Defining factories.
     scenario "email address already exists" do
       create(:user, email: "tester2@example.tld")
-      fill_in "Email", with: "tester2@example.tld"
-      fill_in "Password", with: "test-password"
-      fill_in "Password confirmation", with: "test-password"
-      click_button "Sign up"
+      fill_out_form("tester2@example.tld", "test-password", "test-password")
       expect_error_msgs "Email has already been taken"
     end
 
     scenario "password confirm incorrect" do
-      fill_in "Email", with: "tester@example.tld"
-      fill_in "Password", with: "test-password"
-      fill_in "Password confirmation", with: "other-test-password"
-      click_button "Sign up"
+      fill_out_form("tester@example.tld", "test-password", "other-test-password")
       expect_error_msgs "Password confirmation doesn't match Password"
     end
 
@@ -97,10 +85,7 @@ feature "User Registration", :type => :feature do
     scenario "password too short" do
       min_password_length = 8
       too_shorter_password = 'a' * (min_password_length - 1)
-      fill_in "Email", with: 'tester3@example.tld'
-      fill_in "Password", with: too_shorter_password
-      fill_in "Password confirmation", with: too_shorter_password
-      click_button "Sign up"
+      fill_out_form("tester3@example.tld", too_shorter_password, too_shorter_password)
       expect_error_msgs "Password is too short (minimum is 8 characters)"
     end
 
@@ -134,4 +119,11 @@ feature "User Registration", :type => :feature do
     expect(find_field("Password confirmation", type: "password").value).to be_nil
   end
 
+  # Dry up the form filling out process.
+  def fill_out_form(email, password, password_confirmation)
+    fill_in "Email", with: email
+    fill_in "Password", with: password
+    fill_in "Password confirmation", with: password_confirmation
+    click_button "Sign up"
+  end
 end
