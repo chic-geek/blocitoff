@@ -2,14 +2,14 @@ require 'rails_helper'
 
 feature "Todo list", :type => :feature do
 
-  scenario "create a new todo list" do
+  scenario "create to-do list" do
     sign_in("tester@example.tld", "test-password")
     click_link "Lists"
 
     create_new_list("New test list")
   end
 
-  scenario "edit list title" do
+  scenario "edit to-do list" do
     sign_in("tester@example.tld", "test-password")
     click_link "Lists"
 
@@ -19,13 +19,16 @@ feature "Todo list", :type => :feature do
     expect(page).to have_content("Edit")
     click_link "Edit"
 
-    expect(current_path).to eq(edit_list_path)
+    # 1. Get the last list item (naturally the list object created).
+    # 2. Pass in the list object from the above into the edit_list_path.
+    list = List.last                                 # [1]
+    expect(current_path).to eq(edit_list_path(list)) # [2]
     expect(page).to have_content("Edit list")
     fill_in "Title", with: "Updated list title"
     click_button "Update list"
   end
 
-  scenario "delete a list" do
+  scenario "delete to-do list" do
     sign_in("tester@example.tld", "test-password")
     click_link "Lists"
 
