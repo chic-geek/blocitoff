@@ -1,4 +1,3 @@
-# TODO: Ask eliot to explain this factory in a little depth during next call.
 FactoryGirl.define do
 
   factory :user do
