@@ -4,11 +4,11 @@ class ListsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @lists = List.all
+    @lists = current_user.lists
   end
 
   def show
-    @list = List.find(params[:id])
+    @list = current_user.lists.find(params[:id])
   end
 
   def new
@@ -17,6 +17,7 @@ class ListsController < ApplicationController
 
   def create
     @list = List.new(params.require(:list).permit(:title))
+    @list.user_id = current_user.id # Set the user ID field to the current users ID.
     if @list.save
       redirect_to lists_path, :notice => "Your list was saved"
     else
@@ -25,11 +26,11 @@ class ListsController < ApplicationController
   end
 
   def edit
-    @list = List.find(params[:id])
+    @list = current_user.lists.find(params[:id])
   end
 
   def update
-    @list = List.find(params[:id])
+    @list = current_user.lists.find(params[:id])
     if @list.update_attributes(params.require(:list).permit(:title))
       redirect_to lists_path, :notice => "Your list has been updated."
     else
@@ -38,7 +39,7 @@ class ListsController < ApplicationController
   end
 
   def destroy
-    @list = List.find(params[:id])
+    @list = current_user.lists.find(params[:id])
     @list.destroy
     redirect_to lists_path, :notice => "Your list has been deleted"
   end
