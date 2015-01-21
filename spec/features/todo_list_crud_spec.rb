@@ -26,20 +26,20 @@ feature "Todo list", :type => :feature do
     expect(page).to have_content("Edit list")
     fill_in "Title", with: "Updated list title"
     click_button "Update list"
+
+    expect(page).not_to have_content("New test list")
+    expect(page).to have_content("Updated list title")
   end
 
   scenario "delete to-do list" do
-    sign_in("tester@example.tld", "test-password")
-    click_link "Lists"
-
-    create_new_list("New test list")
-
-    expect(current_path).to eq(lists_path)
-    expect(page).to have_content("Delete")
+    user = sign_in("tester@example.tld", "test-password")
+    create(:list, user: user, title: "shopping list")
+    visit lists_path
     click_link "Delete"
 
     expect(current_path).to eq(lists_path)
     expect(page).to have_content("Your list has been deleted")
+    expect(page).not_to have_content("shopping list")
   end
 
   #========================================================================#
@@ -51,7 +51,7 @@ feature "Todo list", :type => :feature do
   end
 
   def sign_in(email, password)
-    create_user(email, password)
+    user = create_user(email, password)
     visit "/"
     click_link "Sign In"
 
@@ -61,7 +61,9 @@ feature "Todo list", :type => :feature do
     click_button "Sign in"
 
     expect(current_path).to eq("/")
-    expect(page).to have_content("Hello, tester@example.tld")
+    expect(page).to have_content("Hello, #{email}")
+
+    return user
   end
 
   def create_new_list(list_title)
