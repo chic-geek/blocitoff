@@ -46,17 +46,4 @@ feature "Todo list item", :type => :feature do
     return user
   end
 
-  # def create_new_list(list_title)
-  #   expect(current_path).to eq(lists_path)
-  #   click_link "Create new list"
-  #
-  #   expect(current_path).to eq(new_list_path)
-  #   expect(page).to have_content("Add a new list")
-  #   fill_in "Title", with: list_title
-  #   click_button "Add new list"
-  #
-  #   expect(current_path).to eq(lists_path)
-  #   expect(page).to have_content(list_title)
-  # end
-
 end
