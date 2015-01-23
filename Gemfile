@@ -17,6 +17,7 @@ end
 # And use sqlite3 for development.
 group :development do
   gem 'sqlite3'
+  gem 'faker'
 end
 
 # Use Bootstrap 3 for some CSS starter magic.
