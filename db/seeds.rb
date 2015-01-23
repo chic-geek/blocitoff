@@ -1,7 +1,28 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
+require 'faker'
+
+## TODO: Assign lists to a user.
+## TODO: Assign items to a list.
+
+
+## Create lists
 #
-# Examples:
+5.times do
+  List.create!(
+    title: Faker::Lorem.words(3)
+  )
+end
+lists = List.all
+
+
+## Create tasks
 #
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
+10.times do
+  Item.create!(
+    list: lists.sample,
+    name: Faker::Lorem.words(8)
+  )
+end
+
+puts "Seeding finished."
+puts "#{List.count} lists created."
+puts "#{Item.count} to-do items created."
