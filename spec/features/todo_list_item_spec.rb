@@ -16,12 +16,12 @@ feature "Todo list item", :type => :feature do
     click_link "Create new to-do"
 
     expect(page).to have_content("Create a new to-do item")
-    fill_in "Name", with: "new to-do"
+    fill_in "Name", with: "purchase groceries"
     click_button "Create new to-do"
 
     expect(current_path).to eq(list_path(list))
     expect(page).to have_content("Your to-do was created.")
-    expect(page).to have_content("new to-do")
+    expect(page).to have_content("purchase groceries")
   end
 
   private
