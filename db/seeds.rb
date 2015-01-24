@@ -8,7 +8,7 @@ require 'faker'
 #
 5.times do
   List.create!(
-    title: Faker::Lorem.words(3)
+    title: Faker::Lorem.sentence(3)
   )
 end
 lists = List.all
@@ -19,7 +19,7 @@ lists = List.all
 10.times do
   Item.create!(
     list: lists.sample,
-    name: Faker::Lorem.words(8)
+    name: Faker::Lorem.sentence(8)
   )
 end
 
