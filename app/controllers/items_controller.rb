@@ -1,7 +1,10 @@
 class ItemsController < ApplicationController
+
+  before_action :authenticate_user!
+
   def new
     @item = Item.new
-    @list = List.find(params[:list_id])
+    @list = current_user.lists.find(params[:list_id])
   end
 
   def create
