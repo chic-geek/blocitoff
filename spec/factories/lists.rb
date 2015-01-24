@@ -3,5 +3,4 @@ FactoryGirl.define do
     title "MyString"
     user
   end
-
 end
