@@ -9,24 +9,49 @@ require 'faker'
 #
 3.times do
   user = User.new(
-    name:     Faker::Name.name,
-    email:    Faker::Internet.email,
-    password: Faker::Lorem.characters(10)
+  name:     Faker::Name.name,
+  email:    Faker::Internet.email,
+  password: Faker::Lorem.characters(10)
   )
   user.skip_confirmation!
   user.save!
 end
+
+
+## Create a few test users
+## ----------------------------------------------
+## Drop this in before creating lists so that they
+## get included in adding lists to these users.
+#
+memberone = User.new(
+name:     'Member One',
+email:    'memberone@test.com',
+password: 'memberone'
+)
+memberone.skip_confirmation!
+memberone.save
+
+membertwo = User.new(
+name:     'Member Two',
+email:   'membertwo@test.com',
+password: 'membertwo'
+)
+membertwo.skip_confirmation!
+membertwo.save
+
 users = User.all
 
 
 ## Create lists
 ## ----------------------------------------------
 #
-5.times do
-  List.create!(
-    user:  users.sample,
+users.each do |user|
+  5.times do
+    List.create!(
+    user:  user,
     title: Faker::Lorem.sentence(3)
-  )
+    )
+  end
 end
 lists = List.all
 
@@ -34,32 +59,15 @@ lists = List.all
 ## Create tasks
 ## ----------------------------------------------
 #
-10.times do
-  Item.create!(
-    list: lists.sample,
+lists.each do |list|
+  10.times do
+    Item.create!(
+    list: list,
     name: Faker::Lorem.sentence(8)
-  )
+    )
+  end
 end
 
-
-## Create a few test users
-## ----------------------------------------------
-#
-memberone = User.new(
-  name:     'Member One',
-  email:    'memberone@test.com',
-  password: 'memberone'
-)
-memberone.skip_confirmation!
-memberone.save
-
-membertwo = User.new(
-  name:     'Member Two',
-  email:   'membertwo@test.com',
-  password: 'membertwo'
-)
-membertwo.skip_confirmation!
-membertwo.save
 
 
 puts "Seeding finished."
