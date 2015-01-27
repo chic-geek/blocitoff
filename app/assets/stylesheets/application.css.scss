@@ -8,7 +8,12 @@
 * ----------------------------------------------
 * Framework and imports
 * ----------------------------------------------
+* When including bootstrap-sass, be sure to include
+* bootstrap-sprockets too as this is required for the
+* font icons to be loaded.
+* https://github.com/twbs/bootstrap-sass#a-ruby-on-rails
 */
+@import "bootstrap-sprockets";
 @import 'bootstrap';
 
 

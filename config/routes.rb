@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resources :lists do
-    resources :items, only:[:new, :create]
+    resources :items, only:[:new, :create, :destroy]
   end
 
   devise_for :users
