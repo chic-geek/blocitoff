@@ -3,7 +3,7 @@
     <div class="list-group-item">
       <%= item.name %>
       <div class="pull-right">
-        <%= link_to "", item, method: :delete, class: 'glyphicon glyphicon-ok' %>
+        <%= link_to "", [item.list, item], method: :delete, class: 'glyphicon glyphicon-ok' %>
       </div>
     </div>
   <% end %>
