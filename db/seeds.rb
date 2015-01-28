@@ -67,6 +67,7 @@ lists.each do |list|
     )
   end
 end
+items = Item.all
 
 
 
