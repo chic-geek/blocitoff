@@ -60,7 +60,7 @@ lists = List.all
 ## ----------------------------------------------
 #
 lists.each do |list|
-  10.times do
+  5.times do
     Item.create!(
     list: list,
     name: Faker::Lorem.sentence(8)
