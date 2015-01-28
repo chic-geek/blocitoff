@@ -1,7 +1,9 @@
 <div class="list-group">
   <% @items.each do |item| %>
     <div class="list-group-item">
-      <%= item.name %>
+      <span class="list-group-item-span">  
+        <%= item.name %>
+      </span>
       <div class="pull-right">
         <%= link_to "", [item.list, item], method: :delete, class: 'glyphicon glyphicon-ok' %>
       </div>
