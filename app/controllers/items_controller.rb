@@ -21,6 +21,6 @@ class ItemsController < ApplicationController
     @list = List.find(params[:list_id])
     @item = @list.items.find(params[:id])
     @item.destroy
-    redirect_to @list, :notice => "Your task has been completed"
+    redirect_to @list, :notice => "Your task has been marked as complete"
   end
 end
