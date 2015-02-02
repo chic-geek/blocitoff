@@ -1,8 +1,8 @@
 <div class="list-group">
   <% @items.each do |item| %>
     <div class="list-group-item">
-      <span class="list-group-item-span">  
-        <%= item.name %>
+      <span class="list-group-item-span">
+        <%= item.name %> <span class="text-muted">&ndash; <%= pluralize(item.days_left, 'day') %> left</span>
       </span>
       <div class="pull-right">
         <%= link_to "", [item.list, item], method: :delete, class: 'glyphicon glyphicon-ok' %>
