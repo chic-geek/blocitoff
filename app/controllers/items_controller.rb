@@ -18,7 +18,7 @@ class ItemsController < ApplicationController
   end
 
   def destroy
-    @list = List.find(params[:list_id])
+    @list = current_user.lists.find(params[:list_id])
     @item = @list.items.find(params[:id])
     @item.destroy
     redirect_to @list, :notice => "Your task has been marked as complete"
