@@ -66,11 +66,15 @@ feature "Todo list item", :type => :feature do
     expect(page).to have_content(testList.title)
     expect(page).to have_content(testItem.name)
     expect(page).to have_link("", href: list_item_path(list, item))
-    click_link list_item_path(list, item)
 
-    # expect(current_path).to eq(list_path(list))
-    # expect(page).not_to have_content(testItem.name)
-    # expect(page).to have_content("Your task has been marked as complete")
+    # Trying to get the click_link working but wouldn't ('click_link list_item_path(list, item)'),
+    # so tried this instead...
+    # http://stackoverflow.com/questions/14957981/capybara-click-link-with-href-match
+    find(:xpath, "//a[@href='#{list_item_path(list, item)}']").click
+
+    expect(current_path).to eq(list_path(list))
+    expect(page).not_to have_content(testItem.name)
+    expect(page).to have_content("Your task has been marked as complete")
   end
 
   #========================================================================#
