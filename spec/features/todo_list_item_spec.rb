@@ -52,19 +52,19 @@ feature "Todo list item", :type => :feature do
     user = sign_in("tester@example.tld", "test-password")
 
     # a little setup
-    testList = create(:list, user: user, title: "Shopping list")
-    testItem = create(:item, name: "Fetch milk", list: testList)
+    test_list = create(:list, user: user, title: "Shopping list")
+    test_item = create(:item, name: "Fetch milk", list: test_list)
 
     list = List.last
     item = list.items.last
     item = item.id
 
     visit lists_path
-    click_link testList.title
+    click_link test_list.title
 
     expect(current_path).to eq(list_path(list))
-    expect(page).to have_content(testList.title)
-    expect(page).to have_content(testItem.name)
+    expect(page).to have_content(test_list.title)
+    expect(page).to have_content(test_item.name)
     expect(page).to have_link("", href: list_item_path(list, item))
 
     # Trying to get the click_link working but wouldn't ('click_link list_item_path(list, item)'),
@@ -73,7 +73,7 @@ feature "Todo list item", :type => :feature do
     find(:xpath, "//a[@href='#{list_item_path(list, item)}']").click
 
     expect(current_path).to eq(list_path(list))
-    expect(page).not_to have_content(testItem.name)
+    expect(page).not_to have_content(test_item.name)
     expect(page).to have_content("Your task has been marked as complete")
   end
 
