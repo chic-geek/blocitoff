@@ -18,6 +18,7 @@ end
 group :development do
   gem 'sqlite3'
   gem 'faker'
+  gem 'whenever', :require => false
 end
 
 # Use Bootstrap 3 for some CSS starter magic.
