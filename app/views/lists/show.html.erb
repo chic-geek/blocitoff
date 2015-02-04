@@ -1,11 +1,9 @@
 <div class="row">
-  <div class="col-md-8">
+  <div class="col-md-12">
     <h1><%= @list.title %></h1>
-    <%= render partial: 'items/item' %>
-  </div>
-  <div class="col-md-4">
-    <div class="well">
-      <%= link_to "Create new to-do", new_list_item_path(@list), class: 'btn btn-success' %>
+    <div class="well well-sm">
+      <%= link_to "Create new to-do", new_list_item_path(@list), class: 'btn btn-sm btn-success' %>
     </div>
+    <%= render partial: 'items/item' %>
   </div>
 </div>

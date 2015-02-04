@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature "Todo list", :type => :feature do
+feature "Lists", :type => :feature do
 
   scenario "create to-do list" do
     sign_in("tester@example.tld", "test-password")
@@ -14,15 +14,16 @@ feature "Todo list", :type => :feature do
     click_link "Lists"
 
     create_new_list("New test list")
+    # Get the last list item (naturally the list object created).
+    list = List.last
 
     expect(current_path).to eq(lists_path)
-    expect(page).to have_content("Edit")
-    click_link "Edit"
+    expect(page).to have_link("", href: edit_list_path(list))
+    find(:xpath, "//a[@href='#{edit_list_path(list)}']").click
 
-    # 1. Get the last list item (naturally the list object created).
-    # 2. Pass in the list object from the above into the edit_list_path.
-    list = List.last                                 # [1]
-    expect(current_path).to eq(edit_list_path(list)) # [2]
+    # Pass in the list object from the above into the edit_list_path.
+    expect(current_path).to eq(edit_list_path(list))
+
     expect(page).to have_content("Edit list")
     fill_in "Title", with: "Updated list title"
     click_button "Update list"
@@ -34,8 +35,14 @@ feature "Todo list", :type => :feature do
   scenario "delete to-do list" do
     user = sign_in("tester@example.tld", "test-password")
     create(:list, user: user, title: "shopping list")
+    list = List.last
     visit lists_path
-    click_link "Delete"
+
+    expect(page).to have_link("", href: list_path(list))
+
+    # Find link with 'x' href and 'x' data-attr then click it.
+    # https://groups.google.com/forum/#!topic/ruby-capybara/wVkJpSprmVs
+    find(:xpath, "//a[@href='#{list_path(list)}' and @data-method='delete']").click
 
     expect(current_path).to eq(lists_path)
     expect(page).to have_content("Your list has been deleted")

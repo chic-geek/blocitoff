@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature "Todo list item", :type => :feature do
+feature "Items", :type => :feature do
 
   scenario "create item" do
 
