@@ -25,11 +25,12 @@ class ItemsController < ApplicationController
     if @item.destroy
       flash[:notice] = "Your task has been marked as complete"
     else
-      flash[:notice] = "There seemed to be an error, please try again"
+      flash[:error] = "There seemed to be an error, please try again"
     end
 
     respond_with(@item) do |format|
       format.html { redirect_to [@list] }
+      # format.js { render :destroy } this is the default behaviour.
     end
   end
 end

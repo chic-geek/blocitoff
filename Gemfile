@@ -7,20 +7,6 @@ gem 'rails', '4.2.0'
 # Use sqlite3 as the database for Active Record
 # gem 'sqlite3'
 
-# Use PostGres for Heroku production deployment,
-# rails_12factor allows the Rails 4 asset pipeline to run properly on Heroku.
-group :production do
-  gem 'pg'
-  gem 'rails_12factor'
-end
-
-# And use sqlite3 for development.
-group :development do
-  gem 'sqlite3'
-  gem 'faker'
-  gem 'whenever', :require => false
-end
-
 # Use Bootstrap 3 for some CSS starter magic.
 gem 'bootstrap-sass', '~> 3.3.1'
 
@@ -62,10 +48,29 @@ gem 'devise'
 
 gem 'figaro', '1.0'
 
+# Use PostGres for Heroku production deployment,
+# rails_12factor allows the Rails 4 asset pipeline to run properly on Heroku.
+group :production do
+  gem 'pg'
+  gem 'rails_12factor'
+end
+
+# And use sqlite3 for development.
+group :development do
+  gem 'sqlite3'
+  gem 'faker'
+  gem 'whenever', :require => false
+end
+
+group :test do
+  gem 'email_spec'
+  gem 'database_cleaner'
+  gem 'shoulda-matchers', require: false
+end
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
-
   gem 'rspec-rails', '~> 3.1'
 
   # Access an IRB console on exception pages or by using <%= console %> in views
@@ -73,16 +78,6 @@ group :development, :test do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
-
   gem 'factory_girl_rails', '~> 4.5'
-
   gem 'capybara'
-end
-
-group :test do
-  gem 'email_spec'
-
-  gem 'database_cleaner'
-
-  gem 'shoulda-matchers', require: false
 end

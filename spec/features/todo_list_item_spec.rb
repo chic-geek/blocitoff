@@ -46,7 +46,7 @@ feature "Items", :type => :feature do
     expect(page).to have_content("purchase groceries")
   end
 
-  scenario "delete item" do
+  scenario "delete item", js: true do
 
     # sign in...
     user = sign_in("tester@example.tld", "test-password")
