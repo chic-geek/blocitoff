@@ -6,6 +6,7 @@
         <div class="list-group-item">
           <%= link_to list.title, list %>
           <div class="pull-right">
+            <!-- IF element is required inside a link_to: http://stackoverflow.com/questions/14986559/rails-undefined-method-stringify-keys -->
             <%= link_to "", edit_list_path(list), class: 'glyphicon glyphicon-pencil text-muted'%>&nbsp;
             <%= link_to "", list, :method => :delete, class: 'glyphicon glyphicon-trash text-danger' %>
           </div>
