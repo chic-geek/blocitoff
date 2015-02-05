@@ -20,8 +20,13 @@
 # Learn more: http://github.com/javan/whenever
 # http://eewang.github.io/blog/2013/03/12/how-to-schedule-tasks-using-whenever/
 
+# Run `whenever --update-crontab`
+# =>  [write] crontab file updated
+# Run `crontab -l`
+# =>  Will list out all CRON tasks.
+
 set :environment, "development"
 
-every 1.day, :at => '09:00 am' do
+every 1.day, :at => '09:30 am' do
   rake 'todo:delete_items'
 end
