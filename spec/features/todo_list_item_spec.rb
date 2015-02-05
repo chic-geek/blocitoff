@@ -46,7 +46,9 @@ feature "Items", :type => :feature do
     expect(page).to have_content("purchase groceries")
   end
 
-  scenario "delete item", js: true do
+  scenario "delete item", :js => true do
+    # TODO: Test for AJAX delete too using db_cleaner and Selenium web-driver.
+    # USEFUL?: http://devblog.avdi.org/2012/08/31/configuring-database_cleaner-with-rails-rspec-capybara-and-selenium/
 
     # sign in...
     user = sign_in("tester@example.tld", "test-password")
@@ -70,7 +72,10 @@ feature "Items", :type => :feature do
     # Trying to get the click_link working but wouldn't ('click_link list_item_path(list, item)'),
     # so tried this instead...
     # http://stackoverflow.com/questions/14957981/capybara-click-link-with-href-match
-    find(:xpath, "//a[@href='#{list_item_path(list, item)}']").click
+
+    # Use below instead of x:path, just no need to over complicate.
+    find('a[title="delete-item"]').click
+    # find(:xpath, "//a[@href='#{list_item_path(list, item)}']").click
 
     expect(current_path).to eq(list_path(list))
     expect(page).not_to have_content(test_item.name)
