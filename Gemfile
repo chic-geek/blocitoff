@@ -67,6 +67,7 @@ group :test do
   gem 'database_cleaner'
   gem 'shoulda-matchers', require: false
   gem 'selenium-webdriver'
+  gem 'chromedriver-helper'
 end
 
 group :development, :test do
