@@ -15,3 +15,11 @@
 //= require turbolinks
 //= require bootstrap
 //= require_tree .
+
+$(document).ready(function(){
+  setTimeout(fadeFlashNotices, 1000);
+});
+
+var fadeFlashNotices = function() {
+  $('.flash-notices .alert').fadeOut(500);
+}

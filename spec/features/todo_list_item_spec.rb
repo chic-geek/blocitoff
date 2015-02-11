@@ -64,7 +64,6 @@ feature "Items", :type => :feature do
     visit lists_path
     click_link test_list.title
 
-    expect(current_path).to eq(list_path(list))
     expect(page).to have_content(test_list.title)
     expect(page).to have_content(test_item.name)
     expect(page).to have_link("", href: list_item_path(list, item))
@@ -77,9 +76,7 @@ feature "Items", :type => :feature do
     find('a[title="delete-item"]').click
     # find(:xpath, "//a[@href='#{list_item_path(list, item)}']").click
 
-    expect(current_path).to eq(list_path(list))
     expect(page).not_to have_content(test_item.name)
-    expect(page).to have_content("Your task has been marked as complete")
   end
 
   #========================================================================#
@@ -95,12 +92,10 @@ feature "Items", :type => :feature do
     visit "/"
     click_link "Sign In"
 
-    expect(current_path).to eq(new_user_session_path)
     fill_in "Email", with: email
     fill_in "Password", with: password
     click_button "Sign in"
 
-    expect(current_path).to eq("/")
     expect(page).to have_content("Hello, #{email}")
 
     return user

@@ -8,46 +8,49 @@
 </head>
 <body>
 
-<div class="container">
+  <div class="container">
 
-  <ul class="nav nav-tabs nav-core">
-    <li><%= link_to "Home", root_path %></li>
-    <li><%= link_to "Lists", lists_path %></li>
-    <li class="pull-right">
-      <div class="user-info">
-        <% if current_user %>
-          Hello, <%= link_to current_user.email, edit_user_registration_path %> | <%= link_to "Sign out", destroy_user_session_path, method: :delete %>
-        <% else %>
-          <%= link_to "Sign In", new_user_session_path %> or
-          <%= link_to "Sign up", new_user_registration_path %>
-        <% end %>
+    <ul class="nav nav-tabs nav-core">
+      <li><%= link_to "Home", root_path %></li>
+      <li><%= link_to "Lists", lists_path %></li>
+      <li class="pull-right">
+        <div class="user-info">
+          <% if current_user %>
+            Hello, <%= link_to current_user.email, edit_user_registration_path %> | <%= link_to "Sign out", destroy_user_session_path, method: :delete %>
+          <% else %>
+            <%= link_to "Sign In", new_user_session_path %> or
+            <%= link_to "Sign up", new_user_registration_path %>
+          <% end %>
+        </div>
+      </li>
+    </ul>
+
+    <!-- USEFUL URL: http://rebelcolony.com/posts/animate-rails-flash-errors-with-jquery -->
+    <div class="flash-notices">
+      <% if flash[:notice] %>
+      <div class="alert alert-success">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <%= flash.discard(:notice) %>
       </div>
-    </li>
-  </ul>
+      <% elsif flash[:error] %>
+      <div class="alert alert-danger">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <%= flash[:error] %>
+      </div>
+      <% elsif flash[:alert] %>
+      <div class="alert alert-warning">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <%= flash[:alert] %>
+      </div>
+      <% end %>
+    </div>
 
-  <% if flash[:notice] %>
-  <div class="alert alert-success">
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-    <%= flash[:notice] %>
-  </div>
-  <% elsif flash[:error] %>
-  <div class="alert alert-danger">
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-    <%= flash[:error] %>
-  </div>
-  <% elsif flash[:alert] %>
-  <div class="alert alert-warning">
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-    <%= flash[:alert] %>
-  </div>
-  <% end %>
-
-  <div class="row">
-    <div class="col-xs-12">
-      <%= yield %>
+    <div class="row">
+      <div class="col-xs-12">
+        <%= yield %>
+      </div>
     </div>
   </div>
-</div>
 
 </body>
 </html>

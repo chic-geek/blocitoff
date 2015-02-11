@@ -23,9 +23,9 @@ class ItemsController < ApplicationController
     @item = @list.items.find(params[:id])
 
     if @item.destroy
-      flash[:notice] = "Your task has been marked as complete"
+      flash.now[:notice] = "Your task has been marked as complete"
     else
-      flash[:error] = "There seemed to be an error, please try again"
+      flash.now[:error] = "There seemed to be an error, please try again"
     end
 
     respond_with(@item) do |format|
